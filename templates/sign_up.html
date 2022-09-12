@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+  <form action={{url_for('sing_up')}} method="POST">
+    {{form.hidden_tag()}}
+
+    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+      <p>{{field.label}}{{field()}}</p>
+      {% if field.errors %}
+        {% for e in field.errors %}
+        <span>{{e}}</span>
+        {%  endfor %}
+      {% endif %}
+    {% endfor %}
+
+    <p>{{form.submit()}}</p>
+  </form>
+
+</body>
+</html>
