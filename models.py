@@ -14,5 +14,15 @@ class Account(db.Model):
 	# Позже сделаю подтверждение эмейла пока по дефолту True
 	email_verification = db.Column(db.Boolean(), nullable=False, default=True)
 
-if __name__ == '__main__':
-	db.create_all()
+	wallets = db.relationship('Wallet', backref='account')
+
+class Wallet(db.Model):
+	__tablename__ = 'wallets'
+
+	id = db.Column(db.Integer, primary_key=True)
+	owner = db.Column(db.Integer(), db.ForeignKey('accounts.id'))
+	name = db.Column(db.String(30), nullable=False)
+	balance = db.Column(db.Integer, nullable=False)
+	description = db.Column(db.String(100), nullable=False)
+	 
+	

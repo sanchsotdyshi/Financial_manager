@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Главная</title>
+</head>
+<body>
+  <h1>Добро пожаловать {{name}}!</h1>
+  <p class="wallets">
+    <h2>Счета:</h2>
+    {% for wallet in wallets %}
+      <span>{{wallet.name}}</span>
+      <span>{{wallet.balance}}</span>
+      <span>{{wallet.description}}</span>
+    {% endfor %}
+  </p>
+  <form action={{url_for('create_wallet')}} method="POST">
+    {{form.hidden_tag()}}
+    <p>Добавить счет:</p>
+    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+      <p>{{field.label}}{{field()}}</p>
+    {% endfor %}
+    <p>{{form.submit()}}</p>
+  </form>
+  <a href="{{url_for('logout')}}">Выйти</a>
+</body>
+</html>
