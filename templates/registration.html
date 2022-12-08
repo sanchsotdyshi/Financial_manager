@@ -8,6 +8,11 @@
 
   <form action={{url_for('registration')}} method="POST">
     {{form.hidden_tag()}}
+    {%if name_error%}
+      <p>Аккаунт с таким именем уже существует!</p>
+    {% elif email_erro%}
+      <p>Данная почта уже используется другим аккаунтом!</p>
+    {% endif %}
 
     {% for field in form if field.name not in ['csrf_token', 'submit'] %}
       <p>{{field.label}}{{field()}}</p>
@@ -19,6 +24,9 @@
     {% endfor %}
 
     <p>{{form.submit()}}</p>
+    {%if reg_success%}
+      <p>Аккаунт успешно создан! <a href="{{url_for('login')}}">Войти</a></p>
+    {% endif %}
   </form>
 
 </body>

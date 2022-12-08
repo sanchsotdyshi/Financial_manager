@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Отчеты</title>
+</head>
+<body>
+  
+  <form action={{url_for('reports', wallet_id=wallet_id)}} method="POST">
+    {{form.hidden_tag()}}
+    <p>Добавить категорию:</p>
+    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+      <p>{{field.label}}{{field()}}</p>
+    {% endfor %}
+    <p>{{form.submit()}}</p>
+  </form>
+  {% for colmn in report_table %}
+    <p>{{colmn[0]}} - {{colmn[1]}}</p>
+  {% endfor %}
+  <div>
+    <table >
+      <tr>
+        <td>Дата</td>
+        <td>Категория</td>
+        <td>Значение</td>
+        <td>Описание</td>
+      </tr>
+    {% for transaction in transactions %}
+      <tr>
+        <td>{{transaction.date}}</td>
+        <td>{{transaction.category_name}}</td>
+        <td>{{transaction.value}}</td>
+        <td>{{transaction.description}}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+  <a href="{{url_for('wallet', wallet_id=wallet_id)}}">Главная</a>
+</body>
+</html>

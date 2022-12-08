@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Настройки</title>
+</head>
+<body>
+  <h2>{{wallet.name}}</h2>
+  <p>{{wallet.balance}}</p>
+  
+  <form action={{url_for('create_transaction', wallet_id=wallet_id)}} method="POST">
+    {{form.hidden_tag()}}
+    <div hidden="True">{{form.wallet_id}}</div>
+    <p>Добавить запись:</p>
+    {% for field in form if field.name not in ['csrf_token', 'submit', 'wallet_id'] %}
+      <p>{{field.label}}{{field()}}</p>
+    {% endfor %}
+    <p>{{form.submit()}}</p>
+  </form>
+  <div>
+    <table >
+      <tr>
+        <td>Дата</td>
+        <td>Категория</td>
+        <td>Значение</td>
+        <td>Описание</td>
+      </tr>
+    {% for transaction in transactions %}
+      <tr>
+        <td>{{transaction.date}}</td>
+        <td>{{transaction.category_name}}</td>
+        <td>{{transaction.value}}</td>
+        <td>{{transaction.description}}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+  <a href="{{url_for('reports', wallet_id=wallet_id)}}">Отчеты</a>
+  <a href="{{url_for('main_page')}}">Главная</a>
+</body>
+</html>

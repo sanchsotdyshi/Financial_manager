@@ -9,9 +9,13 @@
   <p class="wallets">
     <h2>Счета:</h2>
     {% for wallet in wallets %}
-      <span>{{wallet.name}}</span>
-      <span>{{wallet.balance}}</span>
-      <span>{{wallet.description}}</span>
+      <div>
+        <a href="{{url_for('wallet', wallet_id=wallet.id)}}">
+          <span>{{wallet.name}}</span>
+          <span>{{wallet.balance}}</span>
+          <span>{{wallet.description}}</span>
+        </a>
+      </div>
     {% endfor %}
   </p>
   <form action={{url_for('create_wallet')}} method="POST">

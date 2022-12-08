@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Настройки</title>
+</head>
+<body>
+  <h2>Доступные категории:</h2>
+  {% for category in categories %}
+  <span><p>{{category.name}}</p></span>
+  {% if category.income %}
+  <span><p>Доход</p></span>
+  {% else %}
+  <span><p>Расход</p></span>
+  {% endif %}
+  {% endfor %}
+  
+  <form action={{url_for('create_category')}} method="POST">
+    {{form.hidden_tag()}}
+    <p>Добавить категорию:</p>
+    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+      <p>{{field.label}}{{field()}}</p>
+    {% endfor %}
+    <p>{{form.submit()}}</p>
+  </form>
+  <a href="{{url_for('main_page')}}">Главная</a>
+</body>
+</html>
